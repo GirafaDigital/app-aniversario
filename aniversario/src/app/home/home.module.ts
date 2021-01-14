@@ -1,4 +1,5 @@
-import { MenuToolbarComponent } from './../menu-toolbar/menu-toolbar.component';
+import { MenuToolbarModule } from './../menu-toolbar/menu-toolbar.module';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,11 +15,11 @@ import { HomePage } from './home.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule    
+    HomePageRoutingModule,
+    MenuToolbarModule
   ],
   declarations: [
-    HomePage,
-    MenuToolbarComponent
+    HomePage
   ]
 })
-export class HomePageModule {}
+export class HomePageModule { }

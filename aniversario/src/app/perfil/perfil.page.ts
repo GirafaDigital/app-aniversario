@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilPage implements OnInit {
 
+  nome: {};
+  data: {};
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  perfil() {
+    console.log('estou aqui');
   }
 
 }

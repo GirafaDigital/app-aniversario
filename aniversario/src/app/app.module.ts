@@ -1,3 +1,4 @@
+import { MenuToolbarModule } from './menu-toolbar/menu-toolbar.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -14,7 +15,7 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MenuToolbarModule],
   providers: [
     StatusBar,
     SplashScreen,

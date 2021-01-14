@@ -1,0 +1,16 @@
+@import "src/config.scss";
+
+ion-fab-button {
+    --background: #4d00a0;
+}
+
+ion-button {
+    --color: #4d00a0;
+}
+
+$avatar: 30px;
+.avatar {
+    width: $avatar;
+    height: $avatar;
+}
+
