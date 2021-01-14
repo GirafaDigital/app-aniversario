@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-toolbar',
@@ -7,8 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuToolbarComponent implements OnInit {
 
-  constructor() { }
+  @Input() titulo;
 
-  ngOnInit() {}
+
+  constructor(
+    private router: Router
+  ) { }
+
+  ngOnInit() { }
+
+  irPerfil() {
+    this.router.navigate(['/perfil'])
+  }
+
 
 }

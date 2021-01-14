@@ -1,13 +1,14 @@
 <ion-toolbar>
   <div class="displayMenu">
-    <ion-buttons slot="start">
+    <ion-buttons>
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Aniversários</ion-title>
+    <ion-title>{{titulo}}</ion-title>
 
-    <ion-button fill="clear">
+    <ion-button fill="clear" (click)="irPerfil()">
       <ion-icon size="large" name="person-circle-outline"></ion-icon>
     </ion-button>
+
   </div>
 </ion-toolbar>

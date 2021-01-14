@@ -28,6 +28,24 @@ export class HomePage implements OnInit {
     }, {
       nome: 'Monica Geller',
       data: '24/07/1983'
+    },{
+      nome: 'Joey Tribbiani',
+      data: '10/03/1987'
+    }, {
+      nome: 'Chandler Bing',
+      data: '05/07/1966'
+    }, {
+      nome: 'Ross Geller',
+      data: '12/02/1980'
+    }, {
+      nome: 'Rachel Green',
+      data: '28/10/1974'
+    }, {
+      nome: 'Phoebe Buffay',
+      data: '30/11/1979'
+    }, {
+      nome: 'Monica Geller',
+      data: '24/07/1983'
     }
   ];
 
@@ -44,6 +62,7 @@ export class HomePage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Novo aniversariante',
+      mode: 'ios',
       inputs: [
         {
           name: 'nome',
