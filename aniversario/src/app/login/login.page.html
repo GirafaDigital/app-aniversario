@@ -1,23 +1,84 @@
 <ion-content>
   <div class="bgLogin">
-    <div class="fundo">
+    <div class="bgEscolha">
+      <div class="forms">
+        <div class="segment">
+          <ion-segment (ionChange)="segmentChanged($event)" value="login" mode="ios">
+            <ion-segment-button value="login">
+              <ion-label>Login</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="registrar">
+              <ion-label>Cadastrar</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div> 
 
-      <h1>Login</h1>
-      <form (ngSubmit)="loginEmailSenha()">
-        <ion-list>
-          <ion-item>
-            <ion-label position="floating">E-mail</ion-label>
-            <ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
-          </ion-item>
+        <div class="fundo" id="login">
+          <h1 class="titulo">Login</h1>
+          <form (ngSubmit)="login()">
 
-          <ion-item>
-            <ion-label position="floating">Senha</ion-label>
-            <ion-input type="password" [(ngModel)]="password" name="senha"></ion-input>
-          </ion-item>
+            <ion-input type="email" [(ngModel)]="email" name="email" placeholder="E-mail">
+              <ion-icon name="mail-outline"></ion-icon>
+            </ion-input>
 
-        </ion-list>
-        <ion-button type="submit" expand="block">Entrar</ion-button>
-      </form>
+            <ion-input type="password" [(ngModel)]="password" name="senha" placeholder="Senha">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+            </ion-input>
+
+            <ion-button type="submit" expand="block" value="login">Entrar</ion-button>
+
+            <p class="social-text">Ou entre com as redes sociais</p>
+            <div class="social-media">
+              <a href="#" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-google"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="fundo" id="registrar">
+          <h1 class="titulo">Cadastrar</h1>
+          <form (ngSubmit)="criarConta()">
+
+            <ion-input type="email" [(ngModel)]="email" name="email" placeholder="E-mail">
+              <ion-icon name="mail-outline"></ion-icon>
+            </ion-input>
+
+            <ion-input type="password" [(ngModel)]="password" name="senha" placeholder="Senha">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+            </ion-input>
+
+            <ion-button type="submit" expand="block" value="login">Cadastrar</ion-button>
+
+            <p class="social-text">Ou entre com as redes sociais</p>
+            <div class="social-media">
+              <a href="#" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-google"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
+
 </ion-content>

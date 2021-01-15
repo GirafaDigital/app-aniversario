@@ -6,14 +6,143 @@ ion-button {
 }
 
 .bgLogin {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.bgEscolha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+$diametro: 900px;
+.bgLogin:before {
+    content: "";
+    position: absolute;
+    width: $diametro;
+    height: $diametro;
+    border-radius: 50%;
+    background: $principal;
+    top: -16%;
+    right: -9%;
+    transform: translateY(-50%);
+    transition: 1.8s ease-in-out;
+}
+
+.segment {
+    width: 180px;
+}
+
+.forms {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.fundo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    background: none;
+}
+
+#login {
+    z-index: 2;
+}
+
+#registrar {
+    z-index: 1;
+    display: none;
+}
+
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+}
 
-    background-image: url("../../assets/fund_login.svg");
-    background-size: 100%;
-    background-position: bottom center;
-    background-repeat: no-repeat;
+.titulo {
+    font-size: 2.2rem;
+    color: #fff;
+    margin-bottom: 10px;
+    padding: 0;
+    text-align: center;
+}
+
+ion-input {
+    max-width: 380px;
+    width: 100%;
+    height: 55px;
+    background-color: #f0f0f0;
+    margin: 10px 0px;
+    border-radius: 50px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem !important;
+    color: #333;
+    box-shadow: 1px 5px 6px 0px #9e9e9e38;
+}
+
+ion-input ion-icon {
+    text-align: center;
+    line-height: 55px;
+    color: #acacac;
+    font-size: 1.1rem;
+    width: 100%;
+}
+
+.social-text {
+    padding: 0.7rem 0;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.social-media {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+$icon: 46px;
+.social-icon {
+    height: $icon;
+    width: $icon;
+    border: 1px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #333333;
+    font-size: 1.1rem;
+    border-radius: 50%;
+}
+
+//Animações
+.bgLogin.sign-up-mode:before {
+    transform: translate(77%, 36%);
+    right: 53%;
+}
+
+.registerSocialIcon {
+    color: #fff;
+    border-color: #fff;
+}
+
+.tituloRegister {
+    color: $principal;
+}
+
+.botaoRegister{
+    --background: #fff;
+    --color: #e47900;
 }
