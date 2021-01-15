@@ -5,15 +5,15 @@ ion-button {
     --color: #fff;
 }
 
-ion-footer ion-button {
-    --background: #dbdbdb;
-    --color: #636363;
-}
+.bgLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 
-.bgPerfil {
     background-image: url("../../assets/fund_login.svg");
-    background-size: 94%;
+    background-size: 100%;
     background-position: bottom center;
     background-repeat: no-repeat;
-    height: 81vh;
 }
