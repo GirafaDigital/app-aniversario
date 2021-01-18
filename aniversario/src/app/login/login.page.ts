@@ -1,6 +1,6 @@
+import { StorageService } from './../_service/storage.service';
 import { FirebaseService } from './../_service/firebase.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import $ from "jquery";
@@ -24,10 +24,10 @@ export class LoginPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private afa: AngularFireAuth,
-    private afs: AngularFirestore,
     public alertCtrl: AlertController,
     private router: Router,
-    private firebase: FirebaseService
+    private firebase: FirebaseService,
+    private storageService: StorageService
   ) { }
 
   ngOnInit() {
@@ -40,10 +40,12 @@ export class LoginPage implements OnInit {
       .then(resp => {
         if (resp.additionalUserInfo.isNewUser) {
           this.loading.dismiss();
+          this.storageService.salvarUid(resp.user.uid);
           this.perguntarData(resp.user);
         } else {
           this.loading.dismiss();
-          this.router.navigate(['home']);
+          this.storageService.salvarUid(resp.user.uid);
+          this.router.navigate(['/']);
         }
 
       })
@@ -69,7 +71,8 @@ export class LoginPage implements OnInit {
   async login() {
     await this.afa.signInWithEmailAndPassword(this.email, this.password)
       .then(resp => {
-        console.log(resp)
+        this.storageService.salvarUid(resp.user.uid);
+        this.router.navigate(['/']);
       })
       .catch(error => {
         console.error(error);
@@ -99,7 +102,6 @@ export class LoginPage implements OnInit {
       message: mensagemToast,
       duration: 5000
     });
-    this.loading.dismiss()
     toast.present();
   }
 
@@ -158,7 +160,7 @@ export class LoginPage implements OnInit {
           text: 'Finalizar',
           handler: (data) => {
             console.log('data alert', data);
-            this.salvarDados(user, data);
+            this.salvarDados(data);
           }
         }
       ]
@@ -167,11 +169,9 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  salvarDados(user, data) {
-
-    this.firebase.salvarDados(user, this.nome, data)
-
-    this.router.navigate(['home']);
+  salvarDados(data) {
+    this.firebase.salvarDados(this.nome, data);
+    this.router.navigate(['/']);
   }
 
 }
