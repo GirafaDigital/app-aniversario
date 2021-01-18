@@ -40,7 +40,6 @@ export class FirebaseService {
     const dataAtualNum = String(dataAtual.getTime());
     this.valueUID = this.storageService.obterUid();
 
-    debugger
     this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(dataAtualNum).set({
       nome: nome,
       data: data

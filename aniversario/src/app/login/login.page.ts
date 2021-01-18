@@ -50,6 +50,7 @@ export class LoginPage implements OnInit {
 
       })
       .catch(error => {
+        this.loading.dismiss();
         console.error(error);
         var mensagemToast = 'Erro ao realizar o cadastro. Favor tente novamente!';
 
@@ -142,7 +143,7 @@ export class LoginPage implements OnInit {
   }
 
   async perguntarData(user) {
-    const alert = await this.alertCtrl.create({
+    const alertData = await this.alertCtrl.create({
       mode: 'ios',
       header: 'Está quase finalizando',
       message: 'Qual a sua data de nascimento?',
@@ -166,7 +167,7 @@ export class LoginPage implements OnInit {
       ]
     })
 
-    await alert.present();
+    await alertData.present();
   }
 
   salvarDados(data) {

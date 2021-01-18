@@ -2,7 +2,7 @@ import { StorageService } from './../_service/storage.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from './../_service/firebase.service';
 import { Component, OnInit, NgModule } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -59,17 +59,18 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     private firebase: FirebaseService,
     private storageService: StorageService,
+    private toastCtrl: ToastController,
     private afs: AngularFirestore,
   ) { }
 
   ngOnInit() {
+    this.valueUID = this.storageService.obterUid();
     this.carregarAniversariantes();
+
   }
 
   carregarAniversariantes() {
-    var valueUID = this.storageService.obterUid();
-
-    this.afs.collection('users').doc(valueUID).collection('dados_usuario').valueChanges().subscribe(resp => {
+    this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').valueChanges().subscribe(resp => {
       this.itens = resp;
     }, error => {
       this.firebase.errorFirebase(error);
@@ -79,7 +80,7 @@ export class HomePage implements OnInit {
   }
 
   async addAniversariante() {
-    const alert = await this.alertController.create({
+    const alertAdd = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Novo aniversariante',
       mode: 'ios',
@@ -105,21 +106,19 @@ export class HomePage implements OnInit {
           }
         }, {
           text: 'Ok',
-          handler: (dados) => {
-            console.log(dados);
-            //debugger
-            this.firebase.salvarNovoAniversariante(dados.nome, dados.data);
+          handler: (adicionar) => {
+            console.log(adicionar);
+            this.firebase.salvarNovoAniversariante(adicionar.nome, adicionar.data);
           }
         }
       ]
     });
 
-    await alert.present();
+    await alertAdd.present();
   }
 
   async verAnivesariante(i) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+    const alertVer = await this.alertController.create({
       header: this.itens[i].nome,
       message: 'Escolha uma das alternativas.',
       mode: 'ios',
@@ -127,41 +126,49 @@ export class HomePage implements OnInit {
         {
           text: 'Excluir',
           cssClass: 'excluir',
-          handler: () => {
-            var data: any;
-            this.valueUID = this.storageService.obterUid();
+          handler: (excluir) => {
+            var dadosAniver: any;
 
             this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').snapshotChanges().subscribe(resp => {
 
-              data = resp.map(item => {
+
+              dadosAniver = resp.map(item => {
                 return {
                   id: item.payload.doc.id,
                   ...item.payload.doc.data()
                 } as unknown
               })
 
-              this.confirmarExlcuir(data[i]);
+              if (!dadosAniver[i].uid) {
+                this.confirmarExlcuir(dadosAniver[i]);
+              } else {
+                var mensagem = 'Seu aniversário não pode ser removido, somente editado.';
+                this.presentToast(mensagem)
+              }
+
 
             }, error => {
               this.firebase.errorFirebase(error);
               console.log(error);
             })
 
+
+
           }
         }, {
           text: 'Editar',
-          handler: (dados) => {
-            this.editarAniversariante(this.itens[i]);
+          handler: (editar) => {
+            this.editarAniversariante(this.itens[i], i);
           }
         }
       ]
     });
 
-    await alert.present();
+    await alertVer.present();
   }
 
-  async editarAniversariante(dados) {
-    const alert = await this.alertController.create({
+  async editarAniversariante(dados, i) {
+    const alertEdit = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Editar aniversariante',
       mode: 'ios',
@@ -190,18 +197,35 @@ export class HomePage implements OnInit {
         }, {
           text: 'Salvar',
           handler: (dados) => {
-            console.log(dados);
+
+            this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').snapshotChanges().subscribe(resp => {
+
+              const data = resp.map(item => {
+                return {
+                  id: item.payload.doc.id,
+                  ...item.payload.doc.data()
+                } as unknown
+              })
+
+              this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(data[i].id).update({
+                nome: dados.nome,
+                data: dados.data
+              }).catch(error => console.log('error', error))
+
+            }, error => {
+              this.firebase.errorFirebase(error);
+              console.log(error);
+            })
           }
         }
       ]
     });
 
-    await alert.present();
+    await alertEdit.present();
   }
 
   async confirmarExlcuir(dados) {
     const alertExcluir = await this.alertController.create({
-      cssClass: 'my-custom-class',
       header: 'Deseja realmente excluir?',
       message: 'Ao escolher essa alternativa não terá mais volta, o aniversariante será excluído permanentemente.',
       mode: 'ios',
@@ -209,9 +233,7 @@ export class HomePage implements OnInit {
         {
           text: 'Sim!',
           handler: () => {
-            debugger;
-            this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(dados.id).delete().catch(error => console.log('error', error))
-
+            this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(dados.id).delete().catch(error => console.log('error', error));
           }
         }, {
           text: 'Cancelar',
@@ -224,6 +246,14 @@ export class HomePage implements OnInit {
     });
 
     await alertExcluir.present();
+  }
+
+  async presentToast(mensagemToast) {
+    const toast = await this.toastCtrl.create({
+      message: mensagemToast,
+      duration: 1500
+    });
+    toast.present();
   }
 
 }
