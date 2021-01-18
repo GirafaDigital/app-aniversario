@@ -29,12 +29,25 @@ export class FirebaseService {
 
     this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(dataAtualNum).set({
       nome: nome,
-      data: data.data_nascimento
+      data: data.data_nascimento,
+      uid: this.valueUID
     })
-      .then(resp => console.log(resp))
       .catch(error => console.log('error', error))
   }
-  
+
+  salvarNovoAniversariante(nome, data) {
+    const dataAtual = new Date();
+    const dataAtualNum = String(dataAtual.getTime());
+    this.valueUID = this.storageService.obterUid();
+
+    debugger
+    this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(dataAtualNum).set({
+      nome: nome,
+      data: data
+    })
+      .catch(error => console.log('error', error))
+  }
+
   async logout() {
     this.afa.signOut()
       .then(() => { console.log("LOG Out"); })
@@ -54,4 +67,5 @@ export class FirebaseService {
       this.logout();
     }
   }
+
 }

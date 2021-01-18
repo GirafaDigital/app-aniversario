@@ -51,7 +51,7 @@ export class HomePage implements OnInit {
   //     data: '24/07/1983'
   //   }
   // ];
-
+  valueUID: any;
   itens: any;
 
   constructor(
@@ -107,8 +107,8 @@ export class HomePage implements OnInit {
           text: 'Ok',
           handler: (dados) => {
             console.log(dados);
-
-            this.firebase.salvarDados(dados.nome, dados.data);
+            //debugger
+            this.firebase.salvarNovoAniversariante(dados.nome, dados.data);
           }
         }
       ]
@@ -128,7 +128,25 @@ export class HomePage implements OnInit {
           text: 'Excluir',
           cssClass: 'excluir',
           handler: () => {
-            this.confirmarExlcuir(this.itens[i]);
+            var data: any;
+            this.valueUID = this.storageService.obterUid();
+
+            this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').snapshotChanges().subscribe(resp => {
+
+              data = resp.map(item => {
+                return {
+                  id: item.payload.doc.id,
+                  ...item.payload.doc.data()
+                } as unknown
+              })
+
+              this.confirmarExlcuir(data[i]);
+
+            }, error => {
+              this.firebase.errorFirebase(error);
+              console.log(error);
+            })
+
           }
         }, {
           text: 'Editar',
@@ -182,7 +200,7 @@ export class HomePage implements OnInit {
   }
 
   async confirmarExlcuir(dados) {
-    const alert = await this.alertController.create({
+    const alertExcluir = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Deseja realmente excluir?',
       message: 'Ao escolher essa alternativa não terá mais volta, o aniversariante será excluído permanentemente.',
@@ -190,8 +208,10 @@ export class HomePage implements OnInit {
       buttons: [
         {
           text: 'Sim!',
-          handler: (dados) => {
-            console.log(dados);
+          handler: () => {
+            debugger;
+            this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(dados.id).delete().catch(error => console.log('error', error))
+
           }
         }, {
           text: 'Cancelar',
@@ -203,7 +223,7 @@ export class HomePage implements OnInit {
       ]
     });
 
-    await alert.present();
+    await alertExcluir.present();
   }
 
 }
