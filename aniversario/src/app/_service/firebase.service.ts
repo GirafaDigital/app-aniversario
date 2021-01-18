@@ -29,26 +29,12 @@ export class FirebaseService {
 
     this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(dataAtualNum).set({
       nome: nome,
-      data_aniversario: data
+      data: data.data_nascimento
     })
       .then(resp => console.log(resp))
       .catch(error => console.log('error', error))
-
   }
-
-
-  listaAniversario() {
-    this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').valueChanges().subscribe(resp => {
-      return resp
-    }, error => {
-      return error
-    });
-
-    //   nome: nome,
-    //   data_aniversario: data
-
-  }
-
+  
   async logout() {
     this.afa.signOut()
       .then(() => { console.log("LOG Out"); })
@@ -61,5 +47,11 @@ export class FirebaseService {
       duration: 5000
     });
     toast.present();
+  }
+
+  errorFirebase(error) {
+    if (error = "FirebaseError: Missing or insufficient permissions.") {
+      this.logout();
+    }
   }
 }

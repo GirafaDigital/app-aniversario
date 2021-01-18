@@ -1,3 +1,5 @@
+import { StorageService } from './../_service/storage.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from './../_service/firebase.service';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -55,7 +57,9 @@ export class HomePage implements OnInit {
   constructor(
     public modalController: ModalController,
     public alertController: AlertController,
-    private firebase: FirebaseService
+    private firebase: FirebaseService,
+    private storageService: StorageService,
+    private afs: AngularFirestore,
   ) { }
 
   ngOnInit() {
@@ -63,8 +67,14 @@ export class HomePage implements OnInit {
   }
 
   carregarAniversariantes() {
-    debugger
-    this.itens = this.firebase.listaAniversario();
+    var valueUID = this.storageService.obterUid();
+
+    this.afs.collection('users').doc(valueUID).collection('dados_usuario').valueChanges().subscribe(resp => {
+      this.itens = resp;
+    }, error => {
+      this.firebase.errorFirebase(error);
+      console.log(error);
+    })
 
   }
 
