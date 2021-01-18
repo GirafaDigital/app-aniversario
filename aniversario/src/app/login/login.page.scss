@@ -92,7 +92,8 @@ ion-input {
     box-shadow: 1px 5px 6px 0px #9e9e9e38;
 }
 
-ion-input ion-icon {
+
+ion-input ion-icon, ion-datetime ion-icon{
     text-align: center;
     line-height: 55px;
     color: #acacac;

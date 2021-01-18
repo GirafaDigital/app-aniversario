@@ -1,3 +1,4 @@
+import { FirebaseService } from './../_service/firebase.service';
 import { Component, OnInit, NgModule } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 
@@ -28,7 +29,7 @@ export class HomePage implements OnInit {
     }, {
       nome: 'Monica Geller',
       data: '24/07/1983'
-    },{
+    }, {
       nome: 'Joey Tribbiani',
       data: '10/03/1987'
     }, {
@@ -52,7 +53,8 @@ export class HomePage implements OnInit {
 
   constructor(
     public modalController: ModalController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private firebase: FirebaseService
   ) { }
 
   ngOnInit() {
@@ -87,6 +89,8 @@ export class HomePage implements OnInit {
           text: 'Ok',
           handler: (dados) => {
             console.log(dados);
+
+            this.firebase.salvarDados(dados, dados.nome, dados.data);
           }
         }
       ]

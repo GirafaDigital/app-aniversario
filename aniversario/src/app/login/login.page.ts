@@ -1,8 +1,10 @@
+import { FirebaseService } from './../_service/firebase.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AuthService } from './../_service/auth.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import $ from "jquery";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,11 +17,17 @@ export class LoginPage implements OnInit {
 
   email: any;
   password: any;
+  data: any;
+  nome: any;
 
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private afa: AngularFireAuth
+    private afa: AngularFireAuth,
+    private afs: AngularFirestore,
+    public alertCtrl: AlertController,
+    private router: Router,
+    private firebase: FirebaseService
   ) { }
 
   ngOnInit() {
@@ -30,8 +38,13 @@ export class LoginPage implements OnInit {
 
     const result = this.afa.createUserWithEmailAndPassword(this.email, this.password)
       .then(resp => {
-        this.loading.dismiss();
-        console.log('resp', resp)
+        if (resp.additionalUserInfo.isNewUser) {
+          this.loading.dismiss();
+          this.perguntarData(resp.user);
+        } else {
+          this.loading.dismiss();
+          this.router.navigate(['home']);
+        }
 
       })
       .catch(error => {
@@ -41,10 +54,14 @@ export class LoginPage implements OnInit {
         if (error.message == 'The password is invalid or the user does not have a password.') {
           mensagemToast = 'A senha é inválida. Favor tente novamente!';
 
-        } else if (error.message == 'There is no user record corresponding to this identifier. The user may have been deleted.') {
-          mensagemToast = 'E-mail é inválida. Favor tente novamente!';
+        } else if (error.message == 'The email address is badly formatted.') {
+          mensagemToast = 'O e-mail é inválido. Favor tente novamente!';
+
+        } else if (error.message == 'Password should be at least 6 characters') {
+          mensagemToast = 'A senha deve ter pelo menos 6 caracteres.';
 
         }
+
         this.presentToast(mensagemToast);
       })
   }
@@ -120,6 +137,41 @@ export class LoginPage implements OnInit {
 
 
 
+  }
+
+  async perguntarData(user) {
+    const alert = await this.alertCtrl.create({
+      mode: 'ios',
+      header: 'Está quase finalizando',
+      message: 'Qual a sua data de nascimento?',
+      inputs: [
+        {
+          name: 'data_nascimento',
+          type: 'date'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        }, {
+          text: 'Finalizar',
+          handler: (data) => {
+            console.log('data alert', data);
+            this.salvarDados(user, data);
+          }
+        }
+      ]
+    })
+
+    await alert.present();
+  }
+
+  salvarDados(user, data) {
+
+    this.firebase.salvarDados(user, this.nome, data)
+
+    this.router.navigate(['home']);
   }
 
 }
