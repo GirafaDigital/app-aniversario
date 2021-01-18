@@ -16,8 +16,6 @@ export class AuthGuard implements CanActivate {
   canActivate(): Promise<boolean> {
     return new Promise(resolve => {
       this.firebaseService.getAuth().subscribe(user => {
-        debugger
-
         if (!user) { 
           this.router.navigate(['login']); 
         }

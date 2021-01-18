@@ -1,3 +1,4 @@
+import { FirebaseService } from './../_service/firebase.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,13 +11,19 @@ export class PerfilPage implements OnInit {
   nome: {};
   data: {};
 
-  constructor() { }
+  constructor(
+    private firebaseService: FirebaseService
+  ) { }
 
   ngOnInit() {
   }
 
   perfil() {
     console.log('estou aqui');
+  }
+
+  logout(){
+    this.firebaseService.logout();
   }
 
 }

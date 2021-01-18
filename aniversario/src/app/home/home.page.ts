@@ -10,46 +10,47 @@ import { AlertController, ModalController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
-  itens = [
-    {
-      nome: 'Joey Tribbiani',
-      data: '10/03/1987'
-    }, {
-      nome: 'Chandler Bing',
-      data: '05/07/1966'
-    }, {
-      nome: 'Ross Geller',
-      data: '12/02/1980'
-    }, {
-      nome: 'Rachel Green',
-      data: '28/10/1974'
-    }, {
-      nome: 'Phoebe Buffay',
-      data: '30/11/1979'
-    }, {
-      nome: 'Monica Geller',
-      data: '24/07/1983'
-    }, {
-      nome: 'Joey Tribbiani',
-      data: '10/03/1987'
-    }, {
-      nome: 'Chandler Bing',
-      data: '05/07/1966'
-    }, {
-      nome: 'Ross Geller',
-      data: '12/02/1980'
-    }, {
-      nome: 'Rachel Green',
-      data: '28/10/1974'
-    }, {
-      nome: 'Phoebe Buffay',
-      data: '30/11/1979'
-    }, {
-      nome: 'Monica Geller',
-      data: '24/07/1983'
-    }
-  ];
+  // itens = [
+  //   {
+  //     nome: 'Joey Tribbiani',
+  //     data: '10/03/1987'
+  //   }, {
+  //     nome: 'Chandler Bing',
+  //     data: '05/07/1966'
+  //   }, {
+  //     nome: 'Ross Geller',
+  //     data: '12/02/1980'
+  //   }, {
+  //     nome: 'Rachel Green',
+  //     data: '28/10/1974'
+  //   }, {
+  //     nome: 'Phoebe Buffay',
+  //     data: '30/11/1979'
+  //   }, {
+  //     nome: 'Monica Geller',
+  //     data: '24/07/1983'
+  //   }, {
+  //     nome: 'Joey Tribbiani',
+  //     data: '10/03/1987'
+  //   }, {
+  //     nome: 'Chandler Bing',
+  //     data: '05/07/1966'
+  //   }, {
+  //     nome: 'Ross Geller',
+  //     data: '12/02/1980'
+  //   }, {
+  //     nome: 'Rachel Green',
+  //     data: '28/10/1974'
+  //   }, {
+  //     nome: 'Phoebe Buffay',
+  //     data: '30/11/1979'
+  //   }, {
+  //     nome: 'Monica Geller',
+  //     data: '24/07/1983'
+  //   }
+  // ];
 
+  itens: any;
 
   constructor(
     public modalController: ModalController,
@@ -58,6 +59,13 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.carregarAniversariantes();
+  }
+
+  carregarAniversariantes() {
+    debugger
+    this.itens = this.firebase.listaAniversario();
+
   }
 
   async addAniversariante() {
@@ -90,7 +98,7 @@ export class HomePage implements OnInit {
           handler: (dados) => {
             console.log(dados);
 
-            this.firebase.salvarDados(dados, dados.nome, dados.data);
+            this.firebase.salvarDados(dados.nome, dados.data);
           }
         }
       ]
