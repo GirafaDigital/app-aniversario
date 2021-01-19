@@ -24,4 +24,12 @@ export class StorageService {
     return uid;
   }
 
+  public salvarSlider() {
+    localStorage.setItem('slider', "1");
+  }
+
+  public obterSlider() {
+    return <string>localStorage.getItem('slider');
+  }
+
 }

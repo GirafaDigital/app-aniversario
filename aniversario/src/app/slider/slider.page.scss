@@ -1,0 +1,32 @@
+
+.slides-md{
+    background-color: #f3f2ee;
+}
+ion-slide{
+    height: 100vh;
+}
+
+page-slider {
+    .swiper-pagination-bullet-active {
+      background: #fff;
+      opacity: 1;
+    }
+  
+    .col {
+      padding: 5px;
+      position: absolute;
+      width: 100%;
+      margin: 0;
+      min-height: 1px;
+      -webkit-flex-basis: 0;
+      -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+      -webkit-box-flex: 1;
+      -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+      flex-grow: 1;
+      max-width: 100%;
+      top: 440px;
+    }
+  }
+  
