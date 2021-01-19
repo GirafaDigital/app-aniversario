@@ -22,7 +22,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
   entryComponents: [],
   imports: [
     BrowserModule, 
-    IonicModule.forRoot(), 
+    IonicModule.forRoot({
+      mode: 'md'
+    }), 
     AppRoutingModule, 
     MenuToolbarModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

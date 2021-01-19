@@ -9,13 +9,15 @@ import { Router } from '@angular/router';
 export class MenuToolbarComponent implements OnInit {
 
   @Input() titulo;
-
+  @Input() desabilitarVoltar;
 
   constructor(
     private router: Router
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log(this.desabilitarVoltar)
+  }
 
   irPerfil() {
     this.router.navigate(['/perfil'])

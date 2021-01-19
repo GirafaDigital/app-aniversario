@@ -1,3 +1,5 @@
+import { async } from '@angular/core/testing';
+import { Dados } from './../_interface/dados';
 import { StorageService } from './../_service/storage.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from './../_service/firebase.service';
@@ -81,7 +83,6 @@ export class HomePage implements OnInit {
 
   async addAniversariante() {
     const alertAdd = await this.alertController.create({
-      cssClass: 'my-custom-class',
       header: 'Novo aniversariante',
       mode: 'ios',
       inputs: [
@@ -131,28 +132,24 @@ export class HomePage implements OnInit {
 
             this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').snapshotChanges().subscribe(resp => {
 
-
               dadosAniver = resp.map(item => {
                 return {
                   id: item.payload.doc.id,
                   ...item.payload.doc.data()
-                } as unknown
+                } as unknown as Dados
               })
 
               if (!dadosAniver[i].uid) {
-                this.confirmarExlcuir(dadosAniver[i]);
+              this.confirmarExlcuir(dadosAniver[i]);
               } else {
                 var mensagem = 'Seu aniversário não pode ser removido, somente editado.';
                 this.presentToast(mensagem)
               }
 
-
             }, error => {
               this.firebase.errorFirebase(error);
               console.log(error);
             })
-
-
 
           }
         }, {
@@ -204,10 +201,10 @@ export class HomePage implements OnInit {
                 return {
                   id: item.payload.doc.id,
                   ...item.payload.doc.data()
-                } as unknown
+                } as unknown as Dados
               })
-
-              this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(data[i].id).update({
+              var numero = String(data[i].id);
+              this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(numero).update({
                 nome: dados.nome,
                 data: dados.data
               }).catch(error => console.log('error', error))
@@ -245,7 +242,7 @@ export class HomePage implements OnInit {
       ]
     });
 
-    await alertExcluir.present();
+    alertExcluir.present();
   }
 
   async presentToast(mensagemToast) {

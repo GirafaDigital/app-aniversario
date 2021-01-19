@@ -20,7 +20,7 @@ ion-button {
     height: 100vh;
 }
 
-$diametro: 900px;
+$diametro: 961px;
 .bgLogin:before {
     content: "";
     position: absolute;
@@ -78,7 +78,7 @@ form {
     text-align: center;
 }
 
-ion-input {
+.ion-input {
     max-width: 380px;
     width: 100%;
     height: 55px;
@@ -92,8 +92,13 @@ ion-input {
     box-shadow: 1px 5px 6px 0px #9e9e9e38;
 }
 
+.addInput{
+    grid-template-columns: 15% 73% 9%;
+    align-items: center;
+}
 
-ion-input ion-icon, ion-datetime ion-icon{
+
+.ion-input ion-icon, ion-datetime ion-icon{
     text-align: center;
     line-height: 55px;
     color: #acacac;

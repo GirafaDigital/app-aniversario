@@ -175,4 +175,11 @@ export class LoginPage implements OnInit {
     this.router.navigate(['/']);
   }
 
+  passwordType = 'password';
+  passwordIcon = 'eye-off';
+  
+  viewPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye' ? 'eye-off' : 'eye';
+  }
 }
