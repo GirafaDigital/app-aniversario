@@ -2,6 +2,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { StorageService } from './../_service/storage.service';
 import { FirebaseService } from './../_service/firebase.service';
 import { Component, OnInit } from '@angular/core';
+import { Dados } from '../_interface/dados';
 
 @Component({
   selector: 'app-perfil',
@@ -14,11 +15,14 @@ export class PerfilPage implements OnInit {
   nome: {};
   data: {};
 
+  valueUID: any;
+
   constructor(
     private firebaseService: FirebaseService,
     private storageService: StorageService,
     private afs: AngularFirestore,
   ) {
+    this.valueUID = this.storageService.obterUid();
     this.perfil();
   }
 
@@ -26,19 +30,18 @@ export class PerfilPage implements OnInit {
   }
 
   perfil() {
-    var valueUID = this.storageService.obterUid();
 
-    this.afs.collection('users').doc(valueUID).collection('dados_usuario').snapshotChanges().subscribe(resp => {
+    this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').snapshotChanges().subscribe(resp => {
 
       this.dados = resp.map(item => {
         return {
           id: item.payload.doc.id,
           ...item.payload.doc.data()
-        } as unknown
+        } as unknown as Dados
       })
-      
+
       this.dados.forEach(dados => {
-        if (dados.uid == valueUID) {
+        if (dados.uid == this.valueUID) {
           this.nome = dados.nome,
             this.data = dados.data
         }
@@ -52,6 +55,28 @@ export class PerfilPage implements OnInit {
 
   logout() {
     this.firebaseService.logout();
+  }
+
+  salvarAlteracao() {
+    this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').snapshotChanges().subscribe(resp => {
+
+      this.dados = resp.map(item => {
+        return {
+          id: item.payload.doc.id,
+          ...item.payload.doc.data()
+        } as unknown as Dados
+      })
+
+      this.dados.forEach(dados => {
+        if (dados.uid == this.valueUID) {
+          this.afs.collection('users').doc(this.valueUID).collection('dados_usuario').doc(this.dados[0].id).update({
+            nome: this.nome,
+            data: this.data
+          }).catch(error => console.log('error', error));
+        }
+      })
+    })
+
   }
 
 }

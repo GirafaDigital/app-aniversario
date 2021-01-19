@@ -14,45 +14,6 @@ import { AlertController, ModalController, ToastController } from '@ionic/angula
 })
 export class HomePage implements OnInit {
 
-  // itens = [
-  //   {
-  //     nome: 'Joey Tribbiani',
-  //     data: '10/03/1987'
-  //   }, {
-  //     nome: 'Chandler Bing',
-  //     data: '05/07/1966'
-  //   }, {
-  //     nome: 'Ross Geller',
-  //     data: '12/02/1980'
-  //   }, {
-  //     nome: 'Rachel Green',
-  //     data: '28/10/1974'
-  //   }, {
-  //     nome: 'Phoebe Buffay',
-  //     data: '30/11/1979'
-  //   }, {
-  //     nome: 'Monica Geller',
-  //     data: '24/07/1983'
-  //   }, {
-  //     nome: 'Joey Tribbiani',
-  //     data: '10/03/1987'
-  //   }, {
-  //     nome: 'Chandler Bing',
-  //     data: '05/07/1966'
-  //   }, {
-  //     nome: 'Ross Geller',
-  //     data: '12/02/1980'
-  //   }, {
-  //     nome: 'Rachel Green',
-  //     data: '28/10/1974'
-  //   }, {
-  //     nome: 'Phoebe Buffay',
-  //     data: '30/11/1979'
-  //   }, {
-  //     nome: 'Monica Geller',
-  //     data: '24/07/1983'
-  //   }
-  // ];
   valueUID: any;
   itens: any;
 
@@ -140,7 +101,7 @@ export class HomePage implements OnInit {
               })
 
               if (!dadosAniver[i].uid) {
-              this.confirmarExlcuir(dadosAniver[i]);
+                this.confirmarExlcuir(dadosAniver[i]);
               } else {
                 var mensagem = 'Seu aniversário não pode ser removido, somente editado.';
                 this.presentToast(mensagem)
