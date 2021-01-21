@@ -1,7 +1,0 @@
-{
-  "name": "aplicativo-aniversario",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
