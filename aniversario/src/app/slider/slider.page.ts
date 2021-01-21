@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavController, NavParams } from '@ionic/angular';
 import { StorageService } from '../_service/storage.service';
 
@@ -10,15 +11,15 @@ import { StorageService } from '../_service/storage.service';
 export class SliderPage implements OnInit {
 
   slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
     speed: 400
   };
 
   constructor(
     public navCtrl: NavController,
     public storageService: StorageService,
-    public navParams: NavParams
-    ) {
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -26,7 +27,7 @@ export class SliderPage implements OnInit {
 
   navLogin() {
     this.storageService.salvarSlider();
-    this.navCtrl.navigateRoot("login");
+    this.router.navigate(['login']);
   }
 
 }
