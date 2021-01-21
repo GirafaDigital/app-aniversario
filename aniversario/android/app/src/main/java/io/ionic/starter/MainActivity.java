@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package girafadigital.aniversario.ionic;
 
 import android.os.Bundle;
 
