@@ -1,0 +1,34 @@
+<ion-content>
+  <ion-slides pager="true" [options]="slideOpts">
+
+    <!-- slider 01 -->
+    <ion-slide class="imgSlider celular">
+      <div class="texto">
+        <p class="normal">Lembre-se</p>
+        <p class="negrito">De todos os</p>
+        <p class="normal">Aniversários</p>
+      </div>
+      <img src="../../assets/slider/celular.svg">
+    </ion-slide>
+
+    <!-- slider 02 -->
+    <ion-slide class="imgSlider sala" style="padding-bottom: 43px;">
+      <div class="texto">
+        <p class="normal">Receba</p>
+        <p class="negrito">Notificação no dia</p>
+        <p class="normal">Que tiver aniversário</p>
+      </div>
+
+      <img src="../../assets/slider/sala.svg">
+
+      <button (click)="navLogin()" class="button">
+        <label>Continuar
+          <ion-icon name="arrow-forward"></ion-icon>
+        </label>
+      </button>
+
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>

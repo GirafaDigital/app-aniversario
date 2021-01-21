@@ -1,0 +1,50 @@
+@import "src/config.scss";
+
+.slides-md {
+  background-color: #f3f2ee;
+}
+
+ion-slide {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.texto {
+  text-align: center;
+  margin: auto;
+  line-height: 1;
+
+  p {
+    font-size: 19px;
+    text-transform: uppercase;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .negrito {
+    font-weight: 700;
+    font-size: 25px;
+  }
+}
+
+.button {
+  background-color: $principal;
+  margin-top: 17px;
+  border-radius: 4px;
+  padding: 6px 14px;
+
+  label {
+    color: #fff;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    align-items: center;
+  }
+
+  ion-icon {
+    color: #fff;
+    margin-left: 3px;
+  }
+}
