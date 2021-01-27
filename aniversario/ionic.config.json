@@ -1,8 +1,0 @@
-{
-  "name": "aniversario",
-  "integrations": {
-    "cordova": {},
-    "capacitor": {}
-  },
-  "type": "angular"
-}

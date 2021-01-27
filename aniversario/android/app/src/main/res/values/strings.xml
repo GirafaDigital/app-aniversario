@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">aniversario</string>
-    <string name="title_activity_main">aniversario</string>
-    <string name="package_name">girafadigital.aniversario.ionic</string>
-    <string name="custom_url_scheme">girafadigital.aniversario.ionic</string>
-</resources>
