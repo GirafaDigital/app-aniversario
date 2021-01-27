@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "aniversario-2600d": {
+      "hosting": {
+        "app": [
+          "aniversario-2600d"
+        ]
+      }
+    }
+  }
+}
