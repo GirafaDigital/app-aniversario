@@ -5,14 +5,7 @@
 export const environment = {
   production: false,
 
-  firebaseConfig: {
-    apiKey: "AIzaSyD4KfcGaMW4HGJYVIeP9RCqLE2hCFeFEdw",
-    authDomain: "aniversario-2600d.firebaseapp.com",
-    projectId: "aniversario-2600d",
-    storageBucket: "aniversario-2600d.appspot.com",
-    messagingSenderId: "265926752400",
-    appId: "1:265926752400:web:093db7d0f5db6041f74015"
-  }
+
 };
 
 /*
